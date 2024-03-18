@@ -10,7 +10,7 @@ from typing import List
 
 
 async def wait_n(n: int, max_delay: int) -> List[float]:
-    """spawns wait_random n times 4 with the specified max_delay"""
+    """spawns wait_random n times with the specified max_delay"""
     tasks = [asyncio.create_task(wait_random(max_delay)) for i in range(n)]
     result = await asyncio.gather(*tasks)
     return result

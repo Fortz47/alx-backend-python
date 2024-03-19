@@ -12,12 +12,6 @@ from queue import Queue
 
 async def wait_n(n: int, max_delay: int) -> List[float]:
     """spawns wait_random n times 4 with the specified max_delay"""
-    # tasks = [asyncio.create_task(wait_random(max_delay)) for i in range(n)]
-    # result = await asyncio.gather(*tasks)
-    que = Queue(maxsize=n)
-    result = []
-    for i in range(n):
-        time = await wait_random(max_delay)
-        que.put(time)
-        result.append(time)
+    tasks = [asyncio.create_task(wait_random(max_delay)) for i in range(n)]
+    result = await asyncio.gather(*tasks)
     return result

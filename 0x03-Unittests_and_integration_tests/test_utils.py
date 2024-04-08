@@ -26,7 +26,11 @@ paramList = [(map1, path1, res1), (map2, path2, res2), (map3, path3, res3)]
 class TestAccessNestedMap(unittest.TestCase):
     """Parameterize a unit test"""
     @parameterized.expand(paramList)
-    def test_access_nested_map(self, _map: Mapping, path: Sequence, res: Any) -> None:
+    def test_access_nested_map(
+        self,
+        _map: Mapping,
+        path: Sequence, res: Any
+    ) -> None:
         """tests access_nested_map method"""
         self.assertEqual(access_nested_map(_map, path), res)
 
@@ -34,7 +38,11 @@ class TestAccessNestedMap(unittest.TestCase):
         ({}, ("a",)),
         ({"a": 1}, ("a", "b"))
     ])
-    def test_access_nested_map_exception(self, _map: Mapping, path: Sequence) -> None:
+    def test_access_nested_map_exception(
+        self,
+        _map: Mapping,
+        path: Sequence
+    ) -> None:
         """Parameterize a unit test"""
         with self.assertRaises(KeyError):
             access_nested_map(_map, path)
@@ -72,7 +80,11 @@ class TestMemoize(unittest.TestCase):
                 """a memoized method"""
                 return self.a_method()
 
-        with patch.object(TestClass, 'a_method', return_value=lambda: 42) as mock_a_method:
+        with patch.object(
+            TestClass,
+            'a_method',
+            return_value=lambda: 42
+        ) as mock_a_method:
             obj = TestClass()
             self.assertEqual(obj.a_property(), 42)
             self.assertEqual(obj.a_property(), 42)

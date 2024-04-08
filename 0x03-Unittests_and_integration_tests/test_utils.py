@@ -58,20 +58,23 @@ class TestGetJson(unittest.TestCase):
 
 class TestMemoize(unittest.TestCase):
     """Parameterize and patch"""
-    @parameterized.expand([(), ()])
     def test_memoize(self) -> None:
         """test utils.memoize method"""
         class TestClass:
+            """Test class"""
 
-            def a_method(self):
+            def a_method(self) -> int:
+                """a method"""
                 return 42
 
             @memoize
-            def a_property(self):
+            def a_property(self) -> int:
+                """a memoized method"""
                 return self.a_method()
 
         with patch.object(TestClass, 'a_method') as mock_a_method:
             obj = TestClass()
+            obj.a_property()
             obj.a_property()
 
             mock_a_method.assert_called_once()

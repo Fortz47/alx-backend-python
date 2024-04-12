@@ -101,7 +101,7 @@ class TestGithubOrgClient(unittest.TestCase):
         """Tests the `public_repos` method with a license."""
         self.assertEqual(
             GithubOrgClient("google").public_repos(license="apache-2.0"),
-            self.apache2_repos,
+            ["dagger", "kratu", "traceur-compiler", "firmata.py"]
         )
 
 

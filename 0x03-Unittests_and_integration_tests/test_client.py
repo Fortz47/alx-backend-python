@@ -14,8 +14,8 @@ class TestGithubOrgClient(unittest.TestCase):
         """test GithubOrgClient.org method from client module"""
         client = GithubOrgClient(org_name)
         org_url = client.ORG_URL.format(org=org_name)
-        mock_res = Mock()
-        mock_res.get_json.return_value = {}
+        # mock_res = Mock()
+        # mock_res.get_json.return_value = {}
         result = client.org()
         mock_request.assert_called_once_with(org_url)
 

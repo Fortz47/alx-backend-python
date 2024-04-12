@@ -80,23 +80,23 @@ class TestGithubOrgClient(unittest.TestCase):
             license: str,
             mock_get_json: MagicMock
             ) -> None:
-    """tests GithubOrgClient.public_repos with license arg"""
-    test_payload = TEST_PAYLOAD
-    mock_get_json.return_value = test_payload.get('repos')
-
-    with patch(
-            'client.GithubOrgClient._public_repos_url',
-            new_callable=PropertyMock
-            ) as mock_pub_repo:
-        mock_pub_repo.return_value = test_payload.get('repos_url')
-        client = GithubOrgClient('amazon')
-        self.assertEqual(
-            client.public_repos(license),
-            ["dagger", "kratu", "traceur-compiler", "firmata.py"]
-        )
-        mock_pub_repo.assert_called_once()
-
-    mock_get_json.assert_called_once()
+        """tests GithubOrgClient.public_repos with license arg"""
+        test_payload = TEST_PAYLOAD
+        mock_get_json.return_value = test_payload.get('repos')
+    
+        with patch(
+                'client.GithubOrgClient._public_repos_url',
+                new_callable=PropertyMock
+                ) as mock_pub_repo:
+            mock_pub_repo.return_value = test_payload.get('repos_url')
+            client = GithubOrgClient('amazon')
+            self.assertEqual(
+                client.public_repos(license),
+                ["dagger", "kratu", "traceur-compiler", "firmata.py"]
+            )
+            mock_pub_repo.assert_called_once()
+    
+        mock_get_json.assert_called_once()
 
 
 if __name__ == '__main__':

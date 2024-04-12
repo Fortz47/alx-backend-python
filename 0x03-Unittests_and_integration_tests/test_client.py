@@ -10,6 +10,7 @@ from unittest.mock import (
         MagicMock
     )
 from typing import Dict
+from fixtures import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -72,6 +73,30 @@ class TestGithubOrgClient(unittest.TestCase):
         client = GithubOrgClient("amazon")
         client_has_licence = client.has_license(repo, key)
         self.assertEqual(client_has_licence, expected)
+
+    @patch('client.get_json')
+    def test_public_repos_with_license(
+            self,
+            license: str,
+            mock_get_json: MagicMock
+            ) -> None:
+    """tests GithubOrgClient.public_repos with license arg"""
+    test_payload = TEST_PAYLOAD
+    mock_get_json.return_value = test_payload.get('repos')
+
+    with patch(
+            'client.GithubOrgClient._public_repos_url',
+            new_callable=PropertyMock
+            ) as mock_pub_repo:
+        mock_pub_repo.return_value = test_payload.get('repos_url')
+        client = GithubOrgClient('amazon')
+        self.assertEqual(
+            client.public_repos(license),
+            ["dagger", "kratu", "traceur-compiler", "firmata.py"]
+        )
+        mock_pub_repo.assert_called_once()
+
+    mock_get_json.assert_called_once()
 
 
 if __name__ == '__main__':
